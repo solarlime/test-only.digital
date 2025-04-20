@@ -8,10 +8,16 @@ const Main = styled.main`
   width: 100%;
   max-width: 1440px;
   padding: 170px 80px 104px;
-  border-width: 0 1px;
-  border-color: color-mix(in srgb, var(--dove) 10%, transparent);
-  border-style: solid;
   box-sizing: border-box;
+
+  @media screen and (max-width: 1300px) {
+    padding: 70px 4vw 60px;
+  }
+
+  @media screen and (max-width: 500px) {
+    align-items: flex-start;
+    padding: 59px 0;
+  }
 `;
 
 const Header = styled.header`
@@ -19,6 +25,11 @@ const Header = styled.header`
   width: inherit;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    padding: 0 20px;
+  }
 `;
 
 const AccentBar = styled.div`
@@ -26,8 +37,21 @@ const AccentBar = styled.div`
   flex-shrink: 0;
   width: 5px;
   height: calc(100% - 2 * 7px);
-  margin-left: -81px;
+  margin-left: -80px;
   background: linear-gradient(var(--blue) -5%, var(--fuschia) 90%);
+
+  @media screen and (max-width: 1300px) {
+    height: 100%;
+    margin-left: -4vw;
+  }
+
+  @media screen and (max-width: 1000px) {
+    margin-left: 0;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
 `;
 
 const H1 = styled.h1`
@@ -36,12 +60,33 @@ const H1 = styled.h1`
   font-weight: bold;
   font-size: 56px;
   line-height: 120%;
+
+  @media screen and (max-width: 1300px) {
+    margin-left: 4vw;
+    font-size: 4vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    margin-left: 0;
+    font-size: 20px;
+  }
 `;
 
 const Numbers = styled.ul`
   display: flex;
   padding: 0;
   margin: 96px 0 137px;
+
+  @media screen and (max-width: 1300px) {
+    align-self: flex-end;
+    margin: 6vw 0;
+  }
+
+  @media screen and (max-width: 500px) {
+    align-self: flex-start;
+    margin: 56px 0;
+    padding: 0 20px;
+  }
 `;
 
 const Number = styled.li`
@@ -55,14 +100,40 @@ const Number = styled.li`
   &:not(:last-child) {
     margin-right: 100px;
   }
+
+  @media screen and (max-width: 1300px) {
+    font-size: 13vw;
+    line-height: normal;
+
+    &:not(:last-child) {
+      margin-right: 5vw;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 56px;
+    line-height: normal;
+
+    &:not(:last-child) {
+      margin-right: 28px;
+    }
+  }
 `;
 
 const IrisNumber = styled(Number)`
   color: var(--iris);
+
+  @media screen and (max-width: 500px) {
+    color: var(--blue);
+  }
 `;
 
 const FuschiaNumber = styled(Number)`
   color: var(--fuschia);
+
+  @media screen and (max-width: 500px) {
+    color: var(--pink);
+  }
 `;
 
 const EllipsisButton = styled.button`
@@ -77,7 +148,12 @@ const EllipsisButton = styled.button`
 
   & svg {
     display: block;
-    width: 10px;
+    width: 20%;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 25px;
+    height: 25px;
   }
 `;
 
@@ -87,6 +163,10 @@ const Buttons = styled.div`
 
 const CircleBackButton = styled(EllipsisButton)`
   margin-right: 20px;
+
+  @media screen and (max-width: 500px) {
+    margin-right: 8px;
+  }
 `;
 
 const CircleNextButton = styled(EllipsisButton)`
@@ -97,12 +177,49 @@ const CircleController = styled.div`
   width: 100%;
   align-self: flex-start;
   margin-bottom: 56px;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 1300px) {
+    margin-bottom: 4vw;
+  }
+
+  @media screen and (max-width: 500px) {
+    order: 1;
+    padding: 0 20px;
+    margin: 78px 0 0;
+  }
 `;
 
 const Label = styled.p`
   margin: 0 0 20px;
   font-size: 14px;
   line-height: normal;
+
+  @media screen and (max-width: 500px) {
+    margin: 0 0 11px;
+  }
+`;
+
+const HorLine = styled.div`
+  display: none;
+
+  @media screen and (max-width: 500px) {
+    display: block;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    height: 1px;
+    box-sizing: border-box;
+
+    & > hr {
+      display: block;
+      width: inherit;
+      height: inherit;
+      margin: 0;
+      border: 0;
+      background: #c7cdd9;
+    }
+  }
 `;
 
 const DatesContainer = styled.div`
@@ -124,19 +241,26 @@ const DatesButton = styled(EllipsisButton)`
     background: color-mix(in srgb, var(--blue) 10%, var(--white));
   }
 
-  & svg {
-    display: block;
-    width: 8px;
+  @media screen and (max-width: 500px) {
+    display: none;
   }
 `;
 
 const DatesLeftButton = styled(DatesButton)`
   left: -60px;
+
+  @media screen and (max-width: 1000px) {
+    left: 10px;
+  }
 `;
 
 const DatesRightButton = styled(DatesButton)`
   right: -60px;
   transform: rotate(180deg);
+
+  @media screen and (max-width: 1000px) {
+    right: 10px;
+  }
 `;
 
 const Dates = styled.ul`
@@ -155,12 +279,29 @@ const Dates = styled.ul`
 const Date = styled.li`
   flex-shrink: 0;
   margin: 0 80px 0 0;
-  min-width: 320px;
-  width: 80%;
+  //min-width: 320px;
+  //width: 80%;
   max-width: 400px;
 
   &:last-child {
     margin-right: 0;
+  }
+
+  @media screen and (max-width: 1000px) {
+    width: 320px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 250px;
+    margin-right: 25px;
+
+    &:first-child {
+      padding-left: 20px;
+    }
+
+    &:last-child {
+      padding-right: 20px;
+    }
   }
 `;
 
@@ -171,6 +312,10 @@ const DateHeader = styled.h4`
   font-weight: normal;
   font-size: 25px;
   line-height: 120%;
+
+  @media screen and (max-width: 500px) {
+    font-size: 16px;
+  }
 `;
 
 const DateContent = styled.p`
@@ -201,7 +346,15 @@ const App = () => {
             <Arrow />
           </CircleNextButton>
         </Buttons>
+        {/*<form>*/}
+        {/*  <input type="radio" name="circle" value="1" />*/}
+        {/*  <input type="radio" name="circle" value="2" />*/}
+        {/*  <input type="radio" name="circle" value="3" />*/}
+        {/*</form>*/}
       </CircleController>
+      <HorLine>
+        <hr />
+      </HorLine>
       <DatesContainer>
         <DatesLeftButton type="button">
           <Arrow />

@@ -1,6 +1,33 @@
 import { createGlobalStyle } from 'styled-components';
+import bebasNeueRegular from './assets/fonts/bebas-neue_regular.ttf';
+import ptSansRegular from './assets/fonts/pt-sans_regular.woff2';
+import ptSansBold from './assets/fonts/pt-sans_bold.woff2';
 
 export default createGlobalStyle`
+  @font-face {
+    font-family: 'PT Sans';
+    src: url(${ptSansRegular})
+    format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'PT Sans';
+    src: url(${ptSansBold})
+    format('woff2');
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Bebas Neue';
+    src: url(${bebasNeueRegular})
+    format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
   :root {
     --font-size: 20px;
     --dove: #42567A;
@@ -8,6 +35,7 @@ export default createGlobalStyle`
     --iris: #5D5FEF;
     --blue: #3877EE;
     --fuschia: #EF5DA8;
+    --pink: #F178B6;
   }
   
   :focus-visible {
@@ -48,10 +76,21 @@ export default createGlobalStyle`
   #root {
     display: flex;
     align-items: center;
-    justify-content: center;padding: 0 80px
+    justify-content: center;
+    padding: 0 80px;
   }
 
-  @media screen and (width <= 500px) {
+  @media screen and (max-width: 1000px) {
+    :root {
+      --font-size: 16px;
+    }
+    
+    #root {
+      padding: 0;
+    }
+  }
+
+  @media screen and (max-width: 500px) {
     :root {
       --font-size: 14px;
     }
