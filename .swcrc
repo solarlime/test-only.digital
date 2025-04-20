@@ -1,0 +1,19 @@
+{
+  "jsc": {
+    "parser": {
+      "syntax": "ecmascript",
+      "jsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  },
+  "env": {
+    "targets": "defaults, edge >= 109, iOS >= 12.2, safari >= 12.1, not op_mini all",
+    "coreJs": "3.41",
+    "mode": "usage",
+    "dynamicImport": true
+  }
+}
