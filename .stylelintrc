@@ -4,6 +4,6 @@
   ],
   "customSyntax": "postcss-styled-syntax",
   "rules": {
-    "media-feature-range-notation": "off"
+    "media-feature-range-notation": null
   }
 }

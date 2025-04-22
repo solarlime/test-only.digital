@@ -2,6 +2,7 @@ import path, { dirname } from 'path';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 import FaviconsWebpackPlugin from 'favicons-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,13 +26,17 @@ const config = (mode) => ({
           name(module) {
             // получает имя, то есть node_modules/packageName/not/this/part.js
             // или node_modules/packageName
-            const packageName = module.context.match(
+            const match = module.context.match(
               /[\\/]node_modules[\\/](.*?)([\\/]|$)/,
-            )[1];
+            );
 
-            // имена npm-пакетов можно, не опасаясь проблем, использовать
-            // в URL, но некоторые серверы не любят символы наподобие @
-            return `vendor.${packageName.replace('@', '')}`;
+            // сюда же попадает сторонний css
+            const packageName = match?.[1];
+            if (packageName) {
+              // некоторые серверы не любят символы наподобие @
+              return `vendor.${packageName.replace('@', '')}`;
+            }
+            return `vendor.${crypto.randomUUID()}`;
           },
         },
       },
@@ -63,6 +68,10 @@ const config = (mode) => ({
         ],
       },
       {
+        test: /\.css$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
         test: /\.svg$/i,
         type: 'asset',
         resourceQuery: { not: [/react/] }, // exclude react component if *.svg?react
@@ -88,6 +97,10 @@ const config = (mode) => ({
     new HtmlWebPackPlugin({
       template: './src/index.html',
       filename: './index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
     new FaviconsWebpackPlugin({
       logo: './public/favicon.svg',
