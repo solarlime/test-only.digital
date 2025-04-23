@@ -2,11 +2,12 @@ import styled from 'styled-components';
 import Dates from './components/Dates/Dates';
 import CircleController from './CircleController';
 import Header from './components/Header/Header';
-import { StoreProvider, useStore } from './components/store/StoreProvider';
-import Store from './components/store/store';
-import { useEffect } from 'react';
+import { StoreProvider, useStore } from './store/StoreProvider';
+import Store from './store/store';
+import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Circle from './assets/circle.svg?react';
+import { AppContext } from './AppContext';
 
 const Main = styled.main`
   position: relative;
@@ -175,6 +176,7 @@ const HeaderWrapper = styled.div`
 
 const Block = observer(() => {
   const { blockStore } = useStore();
+  const { isCompact } = useContext(AppContext);
 
   useEffect(() => {
     blockStore.getContent();
@@ -195,10 +197,11 @@ const Block = observer(() => {
             <FuschiaNumber>{blockStore.content[0].to}</FuschiaNumber>
           </Numbers>
         )}
-        <CircleController />
+        {!isCompact && <CircleController />}
         <StyledCircle />
         <CircleHorizontalLine />
       </CircleWrapper>
+      {isCompact && <CircleController />}
       <DatesHorizontalLine />
       {blockStore.content[0] && <Dates scope={blockStore.content[0]} />}
       <VerticalLines>

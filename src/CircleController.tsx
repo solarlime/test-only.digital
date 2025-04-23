@@ -30,6 +30,7 @@ const StyledCircleController = styled.div`
 
   @media screen and (max-width: 500px) {
     order: 1;
+    margin-top: 40px;
     padding: 0 var(--padding-outer);
   }
 `;

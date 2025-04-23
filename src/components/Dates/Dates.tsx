@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { IPeriod } from '../interfaces/content';
+import { IPeriod } from '../../interfaces/content';
 import { v4 as uuidv4 } from 'uuid';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import DatesNavButtons from './DatesNavButtons';
-import { useStore } from '../store/StoreProvider';
+import { useStore } from '../../store/StoreProvider';
 import { observer } from 'mobx-react-lite';
 
 const StyledDates = styled.div`

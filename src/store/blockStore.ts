@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { IPeriod } from '../interfaces/content';
-import getRandomAlphaString from '../../utils/getRandomAlphaString';
+import getRandomAlphaString from '../utils/getRandomAlphaString';
 
 class BlockStore {
   constructor() {
@@ -21,7 +21,7 @@ class BlockStore {
 
   async getContent() {
     try {
-      const content = await import('../../content/content.json').then(
+      const content = await import('../content/content.json').then(
         (res) => res.default,
       );
       runInAction(() => {

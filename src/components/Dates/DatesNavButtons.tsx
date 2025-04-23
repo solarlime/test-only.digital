@@ -1,6 +1,6 @@
 import DatesButton from './DatesButton';
 import Arrow from '../../assets/arrow.svg?react';
-import { useStore } from '../store/StoreProvider';
+import { useStore } from '../../store/StoreProvider';
 import { observer } from 'mobx-react-lite';
 
 const DatesNavButtons = observer(() => {
