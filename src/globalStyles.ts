@@ -41,22 +41,12 @@ export default createGlobalStyle`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0 80px;
+    padding: 0 var(--padding-outer);
   }
 
   @media screen and (max-width: 1000px) {
-    :root {
-      --font-size: 16px;
-    }
-    
     #root {
       padding: 0;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    :root {
-      --font-size: 14px;
     }
   }
 `;

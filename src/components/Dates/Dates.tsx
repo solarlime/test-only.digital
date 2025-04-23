@@ -11,14 +11,12 @@ import { observer } from 'mobx-react-lite';
 const StyledDates = styled.div`
   position: relative;
   width: 100%;
-
-  @media screen and (max-width: 1000px) {
-    padding: 0 50px;
-    box-sizing: border-box;
-  }
+  flex-shrink: 0;
+  padding: 0 var(--padding-outer);
+  box-sizing: border-box;
 
   @media screen and (max-width: 500px) {
-    padding: 0 20px;
+    padding: 0 var(--padding-outer);
   }
 `;
 
@@ -69,9 +67,9 @@ const Dates = observer(({ scope }: { scope: IPeriod }) => {
         spaceBetween={25}
         slidesPerView={1.5}
         breakpoints={{
-          500: {
-            slidesPerView: 2,
-            spaceBetween: 35,
+          650: {
+            slidesPerView: 2.5,
+            spaceBetween: 30,
           },
           800: {
             slidesPerView: 2.5,

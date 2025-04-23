@@ -14,12 +14,12 @@ const DatesButton = styled(EllipsisButton)`
   ${(props) =>
     props.name === 'left' &&
     css`
-      left: -60px;
+      left: 20px;
     `}
   ${(props) =>
     props.name === 'right' &&
     css`
-      right: -60px;
+      right: 20px;
       transform: rotate(180deg);
     `}
 
@@ -32,35 +32,19 @@ const DatesButton = styled(EllipsisButton)`
   }
 
   @media screen and (max-width: 1300px) {
-    width: 30px;
-    height: 30px;
-
     ${(props) =>
       props.name === 'left' &&
       css`
-        left: -4vw;
+        left: 10px;
       `}
     ${(props) =>
       props.name === 'right' &&
       css`
-        right: -4vw;
+        right: 10px;
       `}
   }
 
   @media screen and (max-width: 1000px) {
-    ${(props) =>
-      props.name === 'left' &&
-      css`
-        left: 0;
-      `}
-    ${(props) =>
-      props.name === 'right' &&
-      css`
-        right: 0;
-      `}
-  }
-
-  @media screen and (max-width: 500px) {
     display: none;
   }
 `;

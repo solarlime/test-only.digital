@@ -23,11 +23,53 @@
 }
 
 :root {
-    --font-size: 20px;
     --dove: #42567A;
     --white: #FFF;
     --iris: #5D5FEF;
     --blue: #3877EE;
     --fuschia: #EF5DA8;
     --pink: #F178B6;
+
+    --font-size: 20px;
+    --font-size-h1: 56px;
+    --font-size-numbers: 200px;
+
+    --padding-outer: 80px;
+    --margin-numbers: 40px;
+
+    --min-block-height: 1010px;
+}
+
+@media screen and (max-width: 1300px) {
+    :root {
+        --font-size-h1: 50px;
+        --font-size-numbers: 140px;
+        --padding-outer: 60px;
+        --min-block-height: 900px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    :root {
+        --font-size: 18px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    :root {
+        --font-size: 16px;
+        --font-size-h1: 35px;
+        --font-size-numbers: 88px;
+        --padding-outer: 40px;
+        --min-block-height: 700px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    :root {
+        --font-size: 14px;
+        --font-size-h1: 20px;
+        --font-size-numbers: 56px;
+        --padding-outer: 20px;
+    }
 }

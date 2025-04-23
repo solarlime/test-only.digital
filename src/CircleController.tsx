@@ -20,19 +20,17 @@ const CircleNextButton = styled(EllipsisButton)`
 `;
 
 const StyledCircleController = styled.div`
-  width: 100%;
   align-self: flex-start;
-  margin-bottom: 56px;
+  flex-basis: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  width: 100%;
   box-sizing: border-box;
-
-  @media screen and (max-width: 1300px) {
-    margin-bottom: 4vw;
-  }
 
   @media screen and (max-width: 500px) {
     order: 1;
-    padding: 0 20px;
-    margin: 78px 0 0;
+    padding: 0 var(--padding-outer);
   }
 `;
 

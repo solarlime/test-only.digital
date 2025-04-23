@@ -6,22 +6,33 @@ import { StoreProvider, useStore } from './components/store/StoreProvider';
 import Store from './components/store/store';
 import { useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
+import Circle from './assets/circle.svg?react';
 
 const Main = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: var(--min-block-height);
   max-width: 1440px;
-  padding: 170px 80px 104px;
+  padding: 100px 0;
   box-sizing: border-box;
 
   @media screen and (max-width: 1300px) {
-    padding: 70px 4vw 60px;
+    padding: 70px 0;
+  }
+
+  @media screen and (max-width: 800px) {
+    padding: 40px 0;
   }
 
   @media screen and (max-width: 500px) {
     align-items: flex-start;
+    min-height: 0;
+    height: auto;
     padding: 59px 0;
   }
 `;
@@ -29,17 +40,13 @@ const Main = styled.main`
 const Numbers = styled.ul`
   display: flex;
   padding: 0;
-  margin: 96px 0 137px;
-
-  @media screen and (max-width: 1300px) {
-    align-self: flex-end;
-    margin: 6vw 0;
-  }
+  margin: 40px 0;
+  z-index: 1;
 
   @media screen and (max-width: 500px) {
     align-self: flex-start;
     margin: 56px 0;
-    padding: 0 20px;
+    padding: 0 var(--padding-outer);
   }
 `;
 
@@ -47,30 +54,16 @@ const Number = styled.li`
   flex-shrink: 0;
   list-style-type: none;
   font-weight: bold;
-  font-size: 200px;
+  font-size: var(--font-size-numbers);
   line-height: 160px;
   letter-spacing: calc(1em / -50);
 
   &:not(:last-child) {
-    margin-right: 100px;
+    margin-right: calc(var(--font-size-numbers) / 2);
   }
 
   @media screen and (max-width: 1300px) {
-    font-size: 13vw;
     line-height: normal;
-
-    &:not(:last-child) {
-      margin-right: 5vw;
-    }
-  }
-
-  @media screen and (max-width: 500px) {
-    font-size: 56px;
-    line-height: normal;
-
-    &:not(:last-child) {
-      margin-right: 28px;
-    }
   }
 `;
 
@@ -90,26 +83,94 @@ const FuschiaNumber = styled(Number)`
   }
 `;
 
-const HorLine = styled.div`
-  display: none;
+const VerticalLines = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border-width: 0 1px;
+  border-style: solid;
+  border-color: color-mix(in srgb, var(--dove) 10%, transparent);
+  opacity: 0.5;
+  z-index: -1;
+`;
+
+const VerticalLine = styled.div`
+  width: 1px;
+  height: 100%;
+  background-color: color-mix(in srgb, var(--dove) 10%, transparent);
+
+  @media screen and (max-width: 1000px) {
+    display: none;
+  }
+`;
+
+const HorizontalLine = styled.div`
+  height: 1px;
+  width: 100%;
+`;
+
+const CircleHorizontalLine = styled(HorizontalLine)`
+  position: absolute;
+  top: calc(50% - 0.5px);
+  background-color: color-mix(in srgb, var(--dove) 10%, transparent);
 
   @media screen and (max-width: 500px) {
-    display: block;
-    padding: 0 20px;
-    margin-bottom: 20px;
-    width: 100%;
-    height: 1px;
-    box-sizing: border-box;
-
-    & > hr {
-      display: block;
-      width: inherit;
-      height: inherit;
-      margin: 0;
-      border: 0;
-      background: #c7cdd9;
-    }
+    display: none;
   }
+`;
+
+const DatesHorizontalLine = styled(HorizontalLine)`
+  visibility: hidden;
+  width: calc(100% - 2 * var(--padding-outer));
+  margin: 20px var(--padding-outer);
+  background: #c7cdd9;
+
+  @media screen and (max-width: 1000px) {
+    visibility: visible;
+  }
+`;
+
+const CircleWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 var(--padding-outer);
+  box-sizing: border-box;
+
+  @media screen and (max-width: 500px) {
+    padding: 0;
+  }
+`;
+
+const StyledCircle = styled(Circle)`
+  position: absolute;
+  top: 10%;
+  height: 80%;
+  aspect-ratio: 1;
+  max-width: 100%;
+
+  @media screen and (max-width: 800px) {
+    padding: 0 var(--padding-outer);
+    box-sizing: border-box;
+  }
+
+  @media screen and (max-width: 500px) {
+    display: none;
+  }
+`;
+
+const HeaderWrapper = styled.div`
+  flex-basis: 40%;
+  width: 100%;
 `;
 
 const Block = observer(() => {
@@ -121,21 +182,28 @@ const Block = observer(() => {
 
   return (
     <Main>
-      <Header>
-        Исторические <br />
-        даты
-      </Header>
-      {blockStore.content[0] && (
-        <Numbers>
-          <IrisNumber>{blockStore.content[0].from}</IrisNumber>
-          <FuschiaNumber>{blockStore.content[0].to}</FuschiaNumber>
-        </Numbers>
-      )}
-      <CircleController />
-      <HorLine>
-        <hr />
-      </HorLine>
+      <CircleWrapper>
+        <HeaderWrapper>
+          <Header>
+            Исторические <br />
+            даты
+          </Header>
+        </HeaderWrapper>
+        {blockStore.content[0] && (
+          <Numbers>
+            <IrisNumber>{blockStore.content[0].from}</IrisNumber>
+            <FuschiaNumber>{blockStore.content[0].to}</FuschiaNumber>
+          </Numbers>
+        )}
+        <CircleController />
+        <StyledCircle />
+        <CircleHorizontalLine />
+      </CircleWrapper>
+      <DatesHorizontalLine />
       {blockStore.content[0] && <Dates scope={blockStore.content[0]} />}
+      <VerticalLines>
+        <VerticalLine />
+      </VerticalLines>
     </Main>
   );
 });
