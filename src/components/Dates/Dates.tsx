@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { IPeriod } from '../../interfaces/content';
+import { IExtendedPeriod } from '../../interfaces/content';
 import { v4 as uuidv4 } from 'uuid';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -54,7 +54,7 @@ const DateContent = styled.p`
   margin: 0;
 `;
 
-const Dates = observer(({ scope }: { scope: IPeriod }) => {
+const Dates = observer(({ scope }: { scope: IExtendedPeriod }) => {
   const { blockStore } = useStore();
 
   return (

@@ -1430,6 +1430,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gsap/react@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@gsap/react@npm:2.1.2"
+  peerDependencies:
+    gsap: ^3.12.5
+    react: ">=17"
+  checksum: 10c0/d0285391cfd7cef8125e6ddf81a063121bdb92ddf633d76c6144d8b93e3b7f7d837ec75f1fda8fd33d7efac0ad4c1aad89647e81446e9363012ada7db9f67daf
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -5649,6 +5659,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"gsap@npm:^3.12.7":
+  version: 3.12.7
+  resolution: "gsap@npm:3.12.7"
+  checksum: 10c0/48691602da4c0aaa61a8fe7426e5e2f873e9edb4b7e732b90928c815a47dd1e94d05174bd6f04e73a11184cb0df8c0d2b98d58cd1cbd2df01e33769f6aa8ff11
+  languageName: node
+  linkType: hard
+
 "gzip-size@npm:^6.0.0":
   version: 6.0.0
   resolution: "gzip-size@npm:6.0.0"
@@ -9579,6 +9596,7 @@ __metadata:
   resolution: "test-only@workspace:."
   dependencies:
     "@eslint/js": "npm:^9.24.0"
+    "@gsap/react": "npm:^2.1.2"
     "@svgr/webpack": "npm:^8.1.0"
     "@swc/core": "npm:^1.11.21"
     "@types/csso": "npm:^5"
@@ -9603,6 +9621,7 @@ __metadata:
     favicons: "npm:^7.2.0"
     favicons-webpack-plugin: "npm:^6.0.1"
     globals: "npm:^16.0.0"
+    gsap: "npm:^3.12.7"
     html-loader: "npm:^5.1.0"
     html-webpack-plugin: "npm:^5.6.3"
     mini-css-extract-plugin: "npm:^2.9.2"

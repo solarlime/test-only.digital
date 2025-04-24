@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import EllipsisButton from './components/shared/EllipsisButton';
 import Arrow from './assets/arrow.svg?react';
 import { observer } from 'mobx-react-lite';
+import { useStore } from './store/StoreProvider';
 
 const Buttons = styled.div`
   display: flex;
@@ -46,14 +47,28 @@ const Label = styled.p`
 `;
 
 const CircleController = observer(() => {
+  const { blockStore } = useStore();
+
   return (
     <StyledCircleController>
-      <Label>06/06</Label>
+      <Label>
+        {`${blockStore.period.number + 1 < 10 ? '0' : ''}${blockStore.period.number + 1}`}
+        /
+        {`${blockStore.maxPeriod + 1 < 10 ? '0' : ''}${blockStore.maxPeriod + 1}`}
+      </Label>
       <Buttons>
-        <CircleBackButton type="button">
+        <CircleBackButton
+          type="button"
+          onClick={() => blockStore.setPeriod('prev')}
+          disabled={blockStore.period.number === 0}
+        >
           <Arrow />
         </CircleBackButton>
-        <CircleNextButton type="button" disabled>
+        <CircleNextButton
+          type="button"
+          onClick={() => blockStore.setPeriod('next')}
+          disabled={blockStore.period.number === blockStore.maxPeriod}
+        >
           <Arrow />
         </CircleNextButton>
       </Buttons>

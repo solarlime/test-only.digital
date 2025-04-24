@@ -8,6 +8,7 @@ import { useContext, useEffect } from 'react';
 import { observer } from 'mobx-react-lite';
 import Circle from './assets/circle.svg?react';
 import { AppContext } from './AppContext';
+import Numbers from './Numbers';
 
 const Main = styled.main`
   position: relative;
@@ -35,52 +36,6 @@ const Main = styled.main`
     min-height: 0;
     height: auto;
     padding: 59px 0;
-  }
-`;
-
-const Numbers = styled.ul`
-  display: flex;
-  padding: 0;
-  margin: 40px 0;
-  z-index: 1;
-
-  @media screen and (max-width: 500px) {
-    align-self: flex-start;
-    margin: 56px 0;
-    padding: 0 var(--padding-outer);
-  }
-`;
-
-const Number = styled.li`
-  flex-shrink: 0;
-  list-style-type: none;
-  font-weight: bold;
-  font-size: var(--font-size-numbers);
-  line-height: 160px;
-  letter-spacing: calc(1em / -50);
-
-  &:not(:last-child) {
-    margin-right: calc(var(--font-size-numbers) / 2);
-  }
-
-  @media screen and (max-width: 1300px) {
-    line-height: normal;
-  }
-`;
-
-const IrisNumber = styled(Number)`
-  color: var(--iris);
-
-  @media screen and (max-width: 500px) {
-    color: var(--blue);
-  }
-`;
-
-const FuschiaNumber = styled(Number)`
-  color: var(--fuschia);
-
-  @media screen and (max-width: 500px) {
-    color: var(--pink);
   }
 `;
 
@@ -191,19 +146,14 @@ const Block = observer(() => {
             даты
           </Header>
         </HeaderWrapper>
-        {blockStore.content[0] && (
-          <Numbers>
-            <IrisNumber>{blockStore.content[0].from}</IrisNumber>
-            <FuschiaNumber>{blockStore.content[0].to}</FuschiaNumber>
-          </Numbers>
-        )}
+        {blockStore.period.from && blockStore.period.to && <Numbers />}
         {!isCompact && <CircleController />}
         <StyledCircle />
         <CircleHorizontalLine />
       </CircleWrapper>
       {isCompact && <CircleController />}
       <DatesHorizontalLine />
-      {blockStore.content[0] && <Dates scope={blockStore.content[0]} />}
+      {blockStore.period.dates && <Dates scope={blockStore.period} />}
       <VerticalLines>
         <VerticalLine />
       </VerticalLines>

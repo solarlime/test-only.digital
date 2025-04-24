@@ -10,4 +10,8 @@ interface IPeriod {
   dates: IDate[];
 }
 
-export type { IPeriod, IDate };
+interface IExtendedPeriod extends IPeriod {
+  number: number;
+}
+
+export type { IPeriod, IDate, IExtendedPeriod };
