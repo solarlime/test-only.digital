@@ -4,11 +4,14 @@ import CircleController from './CircleController';
 import Header from './components/Header/Header';
 import { StoreProvider, useStore } from './store/StoreProvider';
 import Store from './store/store';
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { observer } from 'mobx-react-lite';
-import Circle from './assets/circle.svg?react';
+import Circle from './Circle';
 import { AppContext } from './AppContext';
 import Numbers from './Numbers';
+import gsap from 'gsap';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
+import { useGSAP } from '@gsap/react';
 
 const Main = styled.main`
   position: relative;
@@ -16,8 +19,6 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
   min-height: var(--min-block-height);
   max-width: 1440px;
   padding: 100px 0;
@@ -34,7 +35,6 @@ const Main = styled.main`
   @media screen and (max-width: 500px) {
     align-items: flex-start;
     min-height: 0;
-    height: auto;
     padding: 59px 0;
   }
 `;
@@ -95,32 +95,16 @@ const CircleWrapper = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  min-height: 70vh;
   padding: 0 var(--padding-outer);
   box-sizing: border-box;
 
   @media screen and (max-width: 500px) {
+    min-height: unset;
     padding: 0;
-  }
-`;
-
-const StyledCircle = styled(Circle)`
-  position: absolute;
-  top: 10%;
-  height: 80%;
-  aspect-ratio: 1;
-  max-width: 100%;
-
-  @media screen and (max-width: 800px) {
-    padding: 0 var(--padding-outer);
-    box-sizing: border-box;
-  }
-
-  @media screen and (max-width: 500px) {
-    display: none;
   }
 `;
 
@@ -129,35 +113,71 @@ const HeaderWrapper = styled.div`
   width: 100%;
 `;
 
+gsap.registerPlugin(MotionPathPlugin);
+
+const offsetAngle = -60;
+const progressOffset = offsetAngle / 360;
+
 const Block = observer(() => {
   const { blockStore } = useStore();
   const { isCompact } = useContext(AppContext);
+  const itemsRef = useRef<HTMLDivElement[]>([]);
+  const [pathElement, setPathElement] = useState<SVGPathElement | null>(null);
+
+  const circleRef = useCallback((node: SVGPathElement | null) => {
+    if (node) setPathElement(node);
+  }, []);
 
   useEffect(() => {
     blockStore.getContent();
   }, []);
 
+  useGSAP(() => {
+    if (isCompact) return;
+    if (!pathElement) return;
+    const items = itemsRef.current;
+    const count = items.length;
+    console.log(items, pathElement);
+
+    items.forEach((item, i) => {
+      const progress = (progressOffset + i / count) % 1;
+      gsap.to(item, {
+        motionPath: {
+          path: pathElement,
+          align: pathElement,
+          alignOrigin: [0.5, 0.5],
+          start: progress,
+          end: progress,
+          autoRotate: false,
+        },
+        duration: 0.5,
+      });
+    });
+  }, [pathElement]);
+
   return (
-    <Main>
-      <CircleWrapper>
-        <HeaderWrapper>
-          <Header>
-            Исторические <br />
-            даты
-          </Header>
-        </HeaderWrapper>
-        {blockStore.period.from && blockStore.period.to && <Numbers />}
-        {!isCompact && <CircleController />}
-        <StyledCircle />
-        <CircleHorizontalLine />
-      </CircleWrapper>
-      {isCompact && <CircleController />}
-      <DatesHorizontalLine />
-      {blockStore.period.dates && <Dates scope={blockStore.period} />}
-      <VerticalLines>
-        <VerticalLine />
-      </VerticalLines>
-    </Main>
+    blockStore.period && (
+      <Main>
+        <CircleWrapper>
+          <HeaderWrapper>
+            <Header>
+              Исторические <br />
+              даты
+            </Header>
+          </HeaderWrapper>
+          <Numbers />
+          {!isCompact && <CircleController ref={itemsRef} />}
+          <Circle ref={circleRef} />
+          <CircleHorizontalLine />
+        </CircleWrapper>
+        {isCompact && <CircleController ref={itemsRef} />}
+        <DatesHorizontalLine />
+        <Dates scope={blockStore.period} />
+        <VerticalLines>
+          <VerticalLine />
+        </VerticalLines>
+      </Main>
+    )
   );
 });
 

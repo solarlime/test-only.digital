@@ -1,5 +1,5 @@
 import { makeAutoObservable, runInAction } from 'mobx';
-import { IPeriod } from '../interfaces/content';
+import { IExtendedPeriod, IPeriod } from '../interfaces/content';
 import getRandomAlphaString from '../utils/getRandomAlphaString';
 
 class BlockStore {
@@ -13,7 +13,11 @@ class BlockStore {
     return this._blockID;
   }
 
-  private _content: Array<IPeriod> = [];
+  private _content: Array<IExtendedPeriod> = [];
+
+  get periodNumbers() {
+    return this._content.map((item) => item.number);
+  }
 
   async getContent() {
     try {
@@ -21,7 +25,10 @@ class BlockStore {
         (res) => res.default,
       );
       runInAction(() => {
-        this._content = content;
+        this._content = content.map((item: IPeriod, index) => ({
+          ...item,
+          number: index + 1,
+        }));
       });
     } catch (e) {
       runInAction(() => {
@@ -31,36 +38,34 @@ class BlockStore {
     }
   }
 
-  private _period: number = 0;
+  private _periodNumber: number = 1;
 
   get period() {
-    return {
-      number: this._period,
-      ...this._content[this._period],
-    };
+    return this._content[this._periodNumber - 1];
   }
 
   get maxPeriod() {
-    return this._content.length - 1;
+    return this._content.length;
   }
 
-  setPeriod(period: number | 'next' | 'prev') {
-    if (typeof period === 'number') {
-      if (period < 0 || period > this._content.length - 1) {
+  setPeriod(param: { next: boolean } | { number: number }) {
+    if ('number' in param) {
+      const period = this._content.find((item) => item.number === param.number);
+      if (!period) {
         return;
       }
-      this._period = period;
+      this._periodNumber = period.number;
     } else {
-      if (period === 'next') {
-        if (this._period === this._content.length - 1) {
+      if (param.next) {
+        if (this._periodNumber === this._content.length) {
           return;
         }
-        this._period += 1;
+        this._periodNumber += 1;
       } else {
-        if (this._period === 0) {
+        if (this._periodNumber === 1) {
           return;
         }
-        this._period -= 1;
+        this._periodNumber -= 1;
       }
     }
   }

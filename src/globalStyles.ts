@@ -36,6 +36,10 @@ export default createGlobalStyle`
     }
   }
   
+  html {
+    overflow-x: hidden;
+  }
+  
   #root {
     display: flex;
     flex-direction: column;
