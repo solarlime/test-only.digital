@@ -113,6 +113,16 @@ const HeaderWrapper = styled.div`
   width: 100%;
 `;
 
+const H3 = styled.h3`
+  align-self: flex-start;
+  padding: 0 var(--padding-outer);
+  margin: 0;
+  font-size: var(--font-size);
+  font-weight: bold;
+  line-height: 1.5;
+  box-sizing: border-box;
+`;
+
 gsap.registerPlugin(MotionPathPlugin);
 
 const offsetAngle = -60;
@@ -167,6 +177,7 @@ const Block = observer(() => {
           </HeaderWrapper>
           <Numbers />
           {!isCompact && <CircleController ref={itemsRef} />}
+          {isCompact && <H3>{blockStore.period.name}</H3>}
           <Circle ref={circleRef} />
           <CircleHorizontalLine />
         </CircleWrapper>

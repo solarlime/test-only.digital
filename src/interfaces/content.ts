@@ -6,7 +6,7 @@ interface IDate {
 interface IPeriod {
   from: number;
   to: number;
-  theme: string;
+  name: string;
   dates: IDate[];
 }
 
