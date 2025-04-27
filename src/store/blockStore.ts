@@ -15,6 +15,10 @@ class BlockStore {
 
   private _content: Array<IExtendedPeriod> = [];
 
+  get hasContent() {
+    return this._content.length > 0;
+  }
+
   get periodNumbers() {
     return this._content.map((item) => item.number);
   }

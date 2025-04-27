@@ -1,9 +1,9 @@
-import DatesButton from './DatesButton';
-import Arrow from '../../assets/arrow.svg?react';
-import { useStore } from '../../store/StoreProvider';
 import { observer } from 'mobx-react-lite';
+import DatesButton from './DatesButton';
+import { useStore } from '../../store/StoreProvider';
+import Arrow from '../../assets/arrow.svg?react';
 
-const DatesNavButtons = observer(() => {
+const DatesButtons = observer(() => {
   const { blockStore } = useStore();
 
   return (
@@ -18,4 +18,4 @@ const DatesNavButtons = observer(() => {
   );
 });
 
-export default DatesNavButtons;
+export default DatesButtons;

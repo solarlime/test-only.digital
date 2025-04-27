@@ -1,7 +1,7 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
-import AccentBar from './AccentBar';
 import { observer } from 'mobx-react-lite';
+import { ReactNode } from 'react';
+import AccentBar from './AccentBar';
 
 const StyledHeader = styled.header`
   position: relative;

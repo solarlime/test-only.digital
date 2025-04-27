@@ -1,5 +1,5 @@
-import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
+import { observer } from 'mobx-react-lite';
 
 const StyledCircle = styled.svg`
   position: absolute;
@@ -20,7 +20,6 @@ const StyledCircle = styled.svg`
 
 const Circle = observer(
   ({ ref }: { ref: (node: SVGPathElement | null) => void }) => {
-    console.log('wwwww', ref);
     return (
       <StyledCircle
         viewBox="0 0 100 100"

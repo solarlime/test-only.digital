@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { IExtendedPeriod } from '../../interfaces/content';
+import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import DatesNavButtons from './DatesNavButtons';
+import DatesButtons from './DatesButtons';
 import { useStore } from '../../store/StoreProvider';
-import { observer } from 'mobx-react-lite';
+
+import 'swiper/css';
 
 const StyledDates = styled.div`
   position: relative;
@@ -54,47 +54,52 @@ const DateContent = styled.p`
   margin: 0;
 `;
 
-const Dates = observer(({ scope }: { scope: IExtendedPeriod }) => {
+const Dates = observer(() => {
   const { blockStore } = useStore();
 
   return (
-    <StyledDates>
-      <DatesNavButtons />
-      <DatesList
-        // @ts-ignore
-        tabIndex="-1"
-        modules={[Navigation]}
-        spaceBetween={25}
-        slidesPerView={1.5}
-        breakpoints={{
-          650: {
-            slidesPerView: 2.5,
-            spaceBetween: 30,
-          },
-          800: {
-            slidesPerView: 2.5,
-            spaceBetween: 45,
-          },
-          1300: {
-            slidesPerView: 3,
-            spaceBetween: 80,
-          },
-        }}
-        navigation={{
-          nextEl: `button[name="right"][data-id=${blockStore.blockID}]`,
-          prevEl: `button[name="left"][data-id=${blockStore.blockID}]`,
-        }}
-        scrollbar={{ draggable: true, snapOnRelease: true }}
-        cssMode
-      >
-        {scope.dates.map((date) => (
-          <Date key={uuidv4()}>
-            <DateHeader>{date.date}</DateHeader>
-            <DateContent>{date.content}</DateContent>
-          </Date>
-        ))}
-      </DatesList>
-    </StyledDates>
+    <>
+      {!blockStore.hasContent && <p>Нет дат для отображения</p>}
+      {blockStore.hasContent && (
+        <StyledDates>
+          <DatesButtons />
+          <DatesList
+            // @ts-ignore
+            tabIndex="-1"
+            modules={[Navigation]}
+            spaceBetween={25}
+            slidesPerView={1.5}
+            breakpoints={{
+              650: {
+                slidesPerView: 2.5,
+                spaceBetween: 30,
+              },
+              800: {
+                slidesPerView: 2.5,
+                spaceBetween: 45,
+              },
+              1300: {
+                slidesPerView: 3,
+                spaceBetween: 80,
+              },
+            }}
+            navigation={{
+              nextEl: `button[name="right"][data-id=${blockStore.blockID}]`,
+              prevEl: `button[name="left"][data-id=${blockStore.blockID}]`,
+            }}
+            scrollbar={{ draggable: true, snapOnRelease: true }}
+            cssMode
+          >
+            {blockStore.period.dates.map((date) => (
+              <Date key={uuidv4()}>
+                <DateHeader>{date.date}</DateHeader>
+                <DateContent>{date.content}</DateContent>
+              </Date>
+            ))}
+          </DatesList>
+        </StyledDates>
+      )}
+    </>
   );
 });
 
