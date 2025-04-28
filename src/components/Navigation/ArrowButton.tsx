@@ -34,7 +34,7 @@ const ArrowButton = observer((props: ComponentProps<typeof EllipsisButton>) => {
           blockStore.setPeriod({ next: props.name === 'right' });
         }}
         disabled={
-          (props.name === 'left' && blockStore.period.number === 0) ||
+          (props.name === 'left' && blockStore.period.number === 1) ||
           (props.name === 'right' &&
             blockStore.period.number === blockStore.maxPeriod)
         }
