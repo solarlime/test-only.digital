@@ -14,6 +14,7 @@ import Numbers from './Numbers/Numbers';
 import DatesHorizontalLine from './Dates/DatesHorizontalLine';
 import CircleHorizontalLine from './Circle/CircleHorizontalLine';
 import VerticalLine from './shared/VerticalLine';
+import { IExtendedPeriod } from '../interfaces/content';
 
 const Main = styled.div`
   position: relative;
@@ -91,14 +92,17 @@ const PeriodName = styled.h3`
 
 gsap.registerPlugin(MotionPathPlugin);
 
-const offsetAngle = -60;
-const progressOffset = offsetAngle / 360;
+const offsetAngle = -30;
+const shift = offsetAngle / 360;
 
 const Block = observer(() => {
   const { blockStore } = useStore();
   const { isCompact } = useContext(AppContext);
   const itemsRef = useRef<HTMLDivElement[]>([]);
-  const [pathElement, setPathElement] = useState<SVGPathElement | null>(null);
+  const previousPeriodRef = useRef<IExtendedPeriod>({} as IExtendedPeriod);
+  const { 0: pathElement, 1: setPathElement } = useState<SVGPathElement | null>(
+    null,
+  );
 
   const circleRef = useCallback((node: SVGPathElement | null) => {
     if (node) setPathElement(node);
@@ -115,7 +119,7 @@ const Block = observer(() => {
     const count = items.length;
 
     items.forEach((item, i) => {
-      const progress = (progressOffset + i / count) % 1;
+      const progress = shift - i / count;
       gsap.to(item, {
         motionPath: {
           path: pathElement,
@@ -125,10 +129,39 @@ const Block = observer(() => {
           end: progress,
           autoRotate: false,
         },
-        duration: 0.5,
+        duration: 0,
       });
     });
   }, [pathElement]);
+
+  useGSAP(() => {
+    if (isCompact) return;
+    if (!pathElement) return;
+    const items = itemsRef.current;
+    const count = items.length;
+    const progressOffset = 1 / count;
+
+    items.forEach((item, i) => {
+      const progressStart =
+        shift +
+        progressOffset * (previousPeriodRef.current!.number - 1) -
+        i / count;
+      const progressEnd =
+        shift + progressOffset * (blockStore.period.number - 1) - i / count;
+      gsap.to(item, {
+        motionPath: {
+          path: pathElement,
+          align: pathElement,
+          alignOrigin: [0.5, 0.5],
+          start: progressStart,
+          end: progressEnd,
+          autoRotate: false,
+        },
+        ease: 'power1.inOut',
+        duration: 1,
+      });
+    });
+  }, [blockStore.period?.number]);
 
   return (
     blockStore.hasContent && (
@@ -141,12 +174,16 @@ const Block = observer(() => {
             </Header>
           </HeaderWrapper>
           <Numbers />
-          {!isCompact && <Navigation forwardedRef={itemsRef} />}
+          {!isCompact && (
+            <Navigation forwardedRefs={{ itemsRef, previousPeriodRef }} />
+          )}
           {isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
           <Circle ref={circleRef} />
           <CircleHorizontalLine />
         </CircleWrapper>
-        {isCompact && <Navigation forwardedRef={itemsRef} />}
+        {isCompact && (
+          <Navigation forwardedRefs={{ itemsRef, previousPeriodRef }} />
+        )}
         <DatesHorizontalLine />
         <Dates />
         <VerticalLines>

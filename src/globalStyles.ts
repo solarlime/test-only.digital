@@ -23,12 +23,13 @@ export default createGlobalStyle`
     background: transparent;
     cursor: pointer;
 
-    &:active {
-      background-color: color-mix(in srgb, var(--dove) 5%, transparent);
-    }
-
     &:disabled {
       opacity: 0.5;
+      cursor: default;
+    }
+
+    &:not(:disabled):active {
+      background-color: color-mix(in srgb, var(--dove) 5%, transparent);
     }
 
     &:not(:disabled):hover {

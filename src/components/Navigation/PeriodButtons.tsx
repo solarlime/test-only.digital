@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite';
 import { RefObject } from 'react';
 import { useStore } from '../../store/StoreProvider';
 import PeriodButton from './PeriodButton';
+import { IExtendedPeriod } from '../../interfaces/content';
 
 const StyledPeriodButtons = styled.fieldset`
   position: relative;
@@ -15,7 +16,14 @@ const StyledPeriodButtons = styled.fieldset`
 `;
 
 const PeriodButtons = observer(
-  ({ forwardedRef }: { forwardedRef: RefObject<HTMLDivElement[]> }) => {
+  ({
+    forwardedRefs,
+  }: {
+    forwardedRefs: {
+      itemsRef: RefObject<HTMLDivElement[]>;
+      previousPeriodRef: RefObject<IExtendedPeriod>;
+    };
+  }) => {
     const { blockStore } = useStore();
 
     return (
@@ -27,7 +35,7 @@ const PeriodButtons = observer(
                 key={`${blockStore.blockID}-${number}`}
                 periodNumber={number}
                 index={i}
-                forwardedRef={forwardedRef}
+                forwardedRefs={forwardedRefs}
               />
             );
           })}

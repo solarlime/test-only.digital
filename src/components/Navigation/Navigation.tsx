@@ -6,6 +6,7 @@ import { AppContext } from '../../AppContext';
 import PeriodButtons from './PeriodButtons';
 import NavigationLabel from './NavigationLabel';
 import ArrowButtons from './ArrowButtons';
+import { IExtendedPeriod } from '../../interfaces/content';
 
 const NavigationButtons = styled.div`
   display: flex;
@@ -39,7 +40,14 @@ const PeriodName = styled.h3`
 `;
 
 const Navigation = observer(
-  ({ forwardedRef }: { forwardedRef: RefObject<HTMLDivElement[]> }) => {
+  ({
+    forwardedRefs,
+  }: {
+    forwardedRefs: {
+      itemsRef: RefObject<HTMLDivElement[]>;
+      previousPeriodRef: RefObject<IExtendedPeriod>;
+    };
+  }) => {
     const { blockStore } = useStore();
     const { isCompact } = useContext(AppContext);
 
@@ -47,8 +55,8 @@ const Navigation = observer(
       <StyledNavigation>
         <NavigationLabel />
         <NavigationButtons>
-          <ArrowButtons />
-          <PeriodButtons forwardedRef={forwardedRef} />
+          <ArrowButtons forwardedRef={forwardedRefs.previousPeriodRef} />
+          <PeriodButtons forwardedRefs={forwardedRefs} />
           {!isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
         </NavigationButtons>
       </StyledNavigation>

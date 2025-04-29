@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { RefObject } from 'react';
 import { useStore } from '../../store/StoreProvider';
+import { IExtendedPeriod } from '../../interfaces/content';
 
 const StyledPeriodButton = styled.label`
   display: flex;
@@ -88,18 +89,21 @@ const PeriodButton = observer(
   ({
     periodNumber: number,
     index: i,
-    forwardedRef: itemsRef,
+    forwardedRefs,
   }: {
     periodNumber: number;
     index: number;
-    forwardedRef: RefObject<HTMLDivElement[]>;
+    forwardedRefs: {
+      itemsRef: RefObject<HTMLDivElement[]>;
+      previousPeriodRef: RefObject<IExtendedPeriod>;
+    };
   }) => {
     const { blockStore } = useStore();
 
     return (
       <PeriodButtonWrapper
         ref={(el) => {
-          itemsRef.current[i] = el!;
+          forwardedRefs.itemsRef.current[i] = el!;
         }}
       >
         <PeriodInput
@@ -109,6 +113,7 @@ const PeriodButton = observer(
           value={number}
           checked={blockStore.period.number === number}
           onChange={() => {
+            forwardedRefs.previousPeriodRef.current = blockStore.period;
             blockStore.setPeriod({ number });
           }}
         />
