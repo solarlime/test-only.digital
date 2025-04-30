@@ -149,13 +149,14 @@ const Block = observer(() => {
     });
   }, [pathElement]);
 
-  useGSAP(() => {
+  useEffect(() => {
     if (isCompact) return;
     if (!pathElement) return;
     const items = itemsRef.current;
     const count = items.length;
     const progressOffset = 1 / count;
     const { current, previous } = periodNameRef.current!;
+    const tweens: gsap.core.Tween[] = [];
 
     items.forEach((item, i) => {
       const progressStart =
@@ -164,7 +165,7 @@ const Block = observer(() => {
         i / count;
       const progressEnd =
         shift + progressOffset * (blockStore.period.number - 1) - i / count;
-      gsap.to(item, {
+      const tween = gsap.to(item, {
         motionPath: {
           path: pathElement,
           align: pathElement,
@@ -176,16 +177,22 @@ const Block = observer(() => {
         ease: 'power1.inOut',
         duration: 1,
       });
+      tweens.push(tween);
     });
-    gsap.to(current, {
-      opacity: 1,
-      duration: 1,
-      delay: 1,
-    });
-    gsap.to(previous, {
+    const timeline = gsap.timeline();
+    timeline.to(previous, {
       opacity: 0,
       duration: 1,
     });
+    timeline.to(current, {
+      opacity: 1,
+      duration: 1,
+    });
+
+    return () => {
+      tweens.forEach((tween) => tween.kill());
+      timeline.kill();
+    };
   }, [blockStore.period?.number]);
 
   return (
