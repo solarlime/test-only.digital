@@ -37,7 +37,7 @@
     --padding-outer: 80px;
     --margin-numbers: 40px;
 
-    --min-block-height: 1010px;
+    --min-block-height: 600px;
 }
 
 @media screen and (max-width: 1300px) {
@@ -45,7 +45,7 @@
         --font-size-h1: 50px;
         --font-size-numbers: 140px;
         --padding-outer: 60px;
-        --min-block-height: 900px;
+        --min-block-height: 500px;
     }
 }
 
@@ -61,7 +61,7 @@
         --font-size-h1: 35px;
         --font-size-numbers: 88px;
         --padding-outer: 40px;
-        --min-block-height: 700px;
+        --min-block-height: 500px;
     }
 }
 

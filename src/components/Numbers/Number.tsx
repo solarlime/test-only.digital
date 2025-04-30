@@ -11,6 +11,7 @@ const StyledNumber = styled.li<{ colors?: { compact: string; rest: string } }>`
   font-size: var(--font-size-numbers);
   line-height: 160px;
   letter-spacing: calc(1em / -50);
+  z-index: 1;
 
   ${(props) =>
     props.colors &&

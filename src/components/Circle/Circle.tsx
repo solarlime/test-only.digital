@@ -7,6 +7,7 @@ const StyledCircle = styled.svg`
   height: 80%;
   aspect-ratio: 1;
   max-width: 100%;
+  z-index: 1;
 
   @media screen and (max-width: 800px) {
     padding: 0 var(--padding-outer);

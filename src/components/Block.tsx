@@ -22,7 +22,8 @@ const Main = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  min-height: var(--min-block-height);
+  min-height: 100vh;
+  height: auto;
   max-width: 1440px;
   padding: 100px 0;
   box-sizing: border-box;
@@ -37,7 +38,6 @@ const Main = styled.div`
 
   @media screen and (max-width: 500px) {
     align-items: flex-start;
-    min-height: 0;
     padding: 59px 0;
   }
 `;
@@ -65,7 +65,8 @@ const CircleWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  min-height: 70vh;
+  flex-grow: 1;
+  min-height: var(--min-block-height);
   padding: 0 var(--padding-outer);
   box-sizing: border-box;
 

@@ -4,13 +4,21 @@ import { useStore } from '../../store/StoreProvider';
 import Number from './Number';
 
 const StyledNumbers = styled.ul`
+  position: absolute;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   padding: 0;
-  margin: 40px 0;
-  z-index: 1;
+  margin: 0;
+  z-index: -1;
 
   @media screen and (max-width: 500px) {
+    position: static;
     align-self: flex-start;
+    width: auto;
+    height: auto;
     margin: 56px 0;
     padding: 0 var(--padding-outer);
   }
