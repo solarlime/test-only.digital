@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import { RefObject } from 'react';
+import { RefObject, useContext } from 'react';
 import { useStore } from '../../store/StoreProvider';
 import { IExtendedPeriod } from '../../interfaces/content';
+import { AppContext } from '../../AppContext';
 
 const StyledPeriodButton = styled.label`
   display: flex;
@@ -85,6 +86,28 @@ const PeriodInput = styled.input`
   left: -9999px;
 `;
 
+const PeriodName = styled.h3`
+  display: flex;
+  align-items: center;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  font-size: var(--font-size);
+  font-weight: bold;
+  line-height: 1.5;
+
+  input:checked ~ & {
+    position: absolute;
+    left: calc(100% + 20px);
+    padding: 0;
+    margin: 0;
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+    text-align: right;
+  }
+`;
+
 const PeriodButton = observer(
   ({
     periodNumber: number,
@@ -96,9 +119,14 @@ const PeriodButton = observer(
     forwardedRefs: {
       itemsRef: RefObject<HTMLDivElement[]>;
       previousPeriodRef: RefObject<IExtendedPeriod>;
+      periodNameRef: RefObject<{
+        previous: HTMLHeadingElement;
+        current: HTMLHeadingElement;
+      }>;
     };
   }) => {
     const { blockStore } = useStore();
+    const { isCompact } = useContext(AppContext);
 
     return (
       <PeriodButtonWrapper
@@ -120,6 +148,23 @@ const PeriodButton = observer(
         <StyledPeriodButton htmlFor={`${blockStore.blockID}-${number}`}>
           {number}
         </StyledPeriodButton>
+        {!isCompact &&
+          (blockStore.period.number === number ||
+            forwardedRefs.previousPeriodRef.current.number === number) && (
+            <PeriodName
+              ref={(el) => {
+                if (blockStore.period.number === number && el) {
+                  forwardedRefs.periodNameRef.current.previous =
+                    forwardedRefs.periodNameRef.current.current;
+                  forwardedRefs.periodNameRef.current.current = el;
+                }
+              }}
+            >
+              {forwardedRefs.previousPeriodRef.current.number === number
+                ? forwardedRefs.previousPeriodRef.current.name
+                : blockStore.period.name}
+            </PeriodName>
+          )}
       </PeriodButtonWrapper>
     );
   },

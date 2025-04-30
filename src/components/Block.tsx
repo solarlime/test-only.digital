@@ -101,6 +101,15 @@ const Block = observer(() => {
   const { isCompact } = useContext(AppContext);
   const itemsRef = useRef<HTMLDivElement[]>([]);
   const previousPeriodRef = useRef<IExtendedPeriod>({} as IExtendedPeriod);
+  const periodNameRef = useRef<{
+    previous: HTMLHeadingElement;
+    current: HTMLHeadingElement;
+  }>(
+    {} as {
+      previous: HTMLHeadingElement;
+      current: HTMLHeadingElement;
+    },
+  );
   const { 0: pathElement, 1: setPathElement } = useState<SVGPathElement | null>(
     null,
   );
@@ -118,6 +127,7 @@ const Block = observer(() => {
     if (!pathElement) return;
     const items = itemsRef.current;
     const count = items.length;
+    const { current } = periodNameRef.current!;
 
     items.forEach((item, i) => {
       const progress = shift - i / count;
@@ -132,6 +142,10 @@ const Block = observer(() => {
         },
         duration: 0,
       });
+      gsap.to(current, {
+        opacity: 1,
+        duration: 0,
+      });
     });
   }, [pathElement]);
 
@@ -141,6 +155,7 @@ const Block = observer(() => {
     const items = itemsRef.current;
     const count = items.length;
     const progressOffset = 1 / count;
+    const { current, previous } = periodNameRef.current!;
 
     items.forEach((item, i) => {
       const progressStart =
@@ -162,6 +177,15 @@ const Block = observer(() => {
         duration: 1,
       });
     });
+    gsap.to(current, {
+      opacity: 1,
+      duration: 1,
+      delay: 1,
+    });
+    gsap.to(previous, {
+      opacity: 0,
+      duration: 1,
+    });
   }, [blockStore.period?.number]);
 
   return (
@@ -176,14 +200,18 @@ const Block = observer(() => {
           </HeaderWrapper>
           <Numbers />
           {!isCompact && (
-            <Navigation forwardedRefs={{ itemsRef, previousPeriodRef }} />
+            <Navigation
+              forwardedRefs={{ itemsRef, previousPeriodRef, periodNameRef }}
+            />
           )}
           {isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
           <Circle ref={circleRef} />
           <CircleHorizontalLine />
         </CircleWrapper>
         {isCompact && (
-          <Navigation forwardedRefs={{ itemsRef, previousPeriodRef }} />
+          <Navigation
+            forwardedRefs={{ itemsRef, previousPeriodRef, periodNameRef }}
+          />
         )}
         <DatesHorizontalLine />
         <Dates />
