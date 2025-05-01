@@ -20,7 +20,7 @@ const StyledCircle = styled.svg`
 `;
 
 const Circle = observer(
-  ({ ref }: { ref: (node: SVGPathElement | null) => void }) => {
+  ({ ref }: { ref?: (node: SVGPathElement | null) => void }) => {
     return (
       <StyledCircle
         viewBox="0 0 100 100"

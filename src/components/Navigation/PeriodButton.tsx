@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import gsap from 'gsap';
 import { observer } from 'mobx-react-lite';
-import { RefObject, useContext } from 'react';
+import { RefObject, useContext, useEffect } from 'react';
 import { useStore } from '../../store/StoreProvider';
 import { IExtendedPeriod } from '../../interfaces/content';
 import { AppContext } from '../../AppContext';
@@ -103,6 +104,7 @@ const PeriodName = styled.h3`
     margin: 0;
     width: auto;
     height: auto;
+    opacity: 1;
     box-sizing: border-box;
     text-align: right;
   }
@@ -119,14 +121,36 @@ const PeriodButton = observer(
     forwardedRefs: {
       itemsRef: RefObject<HTMLDivElement[]>;
       previousPeriodRef: RefObject<IExtendedPeriod>;
-      periodNameRef: RefObject<{
-        previous: HTMLHeadingElement;
-        current: HTMLHeadingElement;
-      }>;
     };
   }) => {
     const { blockStore } = useStore();
     const { isCompact } = useContext(AppContext);
+
+    useEffect(() => {
+      if (blockStore.period.number !== number) return;
+      const heading = [].find.call(
+        forwardedRefs.itemsRef.current[i].children,
+        (el: HTMLElement) => el.tagName.toLowerCase() === 'h3',
+      ) as HTMLHeadingElement | undefined;
+      if (heading) {
+        const tween = gsap.to(heading, {
+          opacity: 1,
+          duration: 1,
+        });
+
+        return () => {
+          tween.kill();
+          const disappearing = gsap.to(heading, {
+            opacity: 0,
+            duration: 1,
+            onComplete: () => {
+              disappearing.kill();
+            },
+          });
+        };
+      }
+      return;
+    }, [blockStore.period.number]);
 
     return (
       <PeriodButtonWrapper
@@ -151,15 +175,7 @@ const PeriodButton = observer(
         {!isCompact &&
           (blockStore.period.number === number ||
             forwardedRefs.previousPeriodRef.current.number === number) && (
-            <PeriodName
-              ref={(el) => {
-                if (blockStore.period.number === number && el) {
-                  forwardedRefs.periodNameRef.current.previous =
-                    forwardedRefs.periodNameRef.current.current;
-                  forwardedRefs.periodNameRef.current.current = el;
-                }
-              }}
-            >
+            <PeriodName>
               {forwardedRefs.previousPeriodRef.current.number === number
                 ? forwardedRefs.previousPeriodRef.current.name
                 : blockStore.period.name}

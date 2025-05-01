@@ -13,6 +13,7 @@ const StyledPeriodButtons = styled.fieldset`
   display: flex;
   flex-basis: 50%;
   justify-content: center;
+  user-select: none;
 `;
 
 const PeriodButtons = observer(
@@ -22,10 +23,6 @@ const PeriodButtons = observer(
     forwardedRefs: {
       itemsRef: RefObject<HTMLDivElement[]>;
       previousPeriodRef: RefObject<IExtendedPeriod>;
-      periodNameRef: RefObject<{
-        previous: HTMLHeadingElement;
-        current: HTMLHeadingElement;
-      }>;
     };
   }) => {
     const { blockStore } = useStore();

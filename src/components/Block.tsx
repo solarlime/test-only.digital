@@ -1,9 +1,6 @@
 import styled from 'styled-components';
-import gsap from 'gsap';
-import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { useGSAP } from '@gsap/react';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { useStore } from '../store/StoreProvider';
 import { AppContext } from '../AppContext';
 import Dates from './Dates/Dates';
@@ -14,7 +11,6 @@ import Numbers from './Numbers/Numbers';
 import DatesHorizontalLine from './Dates/DatesHorizontalLine';
 import CircleHorizontalLine from './Circle/CircleHorizontalLine';
 import VerticalLine from './shared/VerticalLine';
-import { IExtendedPeriod } from '../interfaces/content';
 
 const Main = styled.div`
   position: relative;
@@ -91,25 +87,9 @@ const PeriodName = styled.h3`
   box-sizing: border-box;
 `;
 
-gsap.registerPlugin(MotionPathPlugin);
-
-const offsetAngle = -30;
-const shift = offsetAngle / 360;
-
 const Block = observer(() => {
   const { blockStore } = useStore();
   const { isCompact } = useContext(AppContext);
-  const itemsRef = useRef<HTMLDivElement[]>([]);
-  const previousPeriodRef = useRef<IExtendedPeriod>({} as IExtendedPeriod);
-  const periodNameRef = useRef<{
-    previous: HTMLHeadingElement;
-    current: HTMLHeadingElement;
-  }>(
-    {} as {
-      previous: HTMLHeadingElement;
-      current: HTMLHeadingElement;
-    },
-  );
   const { 0: pathElement, 1: setPathElement } = useState<SVGPathElement | null>(
     null,
   );
@@ -122,111 +102,51 @@ const Block = observer(() => {
     blockStore.getContent();
   }, []);
 
-  useGSAP(() => {
-    if (isCompact) return;
-    if (!pathElement) return;
-    const items = itemsRef.current;
-    const count = items.length;
-    const { current } = periodNameRef.current!;
-
-    items.forEach((item, i) => {
-      const progress = shift - i / count;
-      gsap.to(item, {
-        motionPath: {
-          path: pathElement,
-          align: pathElement,
-          alignOrigin: [0.5, 0.5],
-          start: progress,
-          end: progress,
-          autoRotate: false,
-        },
-        duration: 0,
-      });
-      gsap.to(current, {
-        opacity: 1,
-        duration: 0,
-      });
-    });
-  }, [pathElement]);
-
-  useEffect(() => {
-    if (isCompact) return;
-    if (!pathElement) return;
-    const items = itemsRef.current;
-    const count = items.length;
-    const progressOffset = 1 / count;
-    const { current, previous } = periodNameRef.current!;
-    const tweens: gsap.core.Tween[] = [];
-
-    items.forEach((item, i) => {
-      const progressStart =
-        shift +
-        progressOffset * (previousPeriodRef.current!.number - 1) -
-        i / count;
-      const progressEnd =
-        shift + progressOffset * (blockStore.period.number - 1) - i / count;
-      const tween = gsap.to(item, {
-        motionPath: {
-          path: pathElement,
-          align: pathElement,
-          alignOrigin: [0.5, 0.5],
-          start: progressStart,
-          end: progressEnd,
-          autoRotate: false,
-        },
-        ease: 'power1.inOut',
-        duration: 1,
-      });
-      tweens.push(tween);
-    });
-    const timeline = gsap.timeline();
-    timeline.to(previous, {
-      opacity: 0,
-      duration: 1,
-    });
-    timeline.to(current, {
-      opacity: 1,
-      duration: 1,
-    });
-
-    return () => {
-      tweens.forEach((tween) => tween.kill());
-      timeline.kill();
-    };
-  }, [blockStore.period?.number]);
-
   return (
-    blockStore.hasContent && (
-      <Main>
-        <CircleWrapper>
-          <HeaderWrapper>
-            <Header>
-              Исторические <br />
-              даты
-            </Header>
-          </HeaderWrapper>
-          <Numbers />
-          {!isCompact && (
-            <Navigation
-              forwardedRefs={{ itemsRef, previousPeriodRef, periodNameRef }}
-            />
-          )}
-          {isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
-          <Circle ref={circleRef} />
-          <CircleHorizontalLine />
-        </CircleWrapper>
-        {isCompact && (
-          <Navigation
-            forwardedRefs={{ itemsRef, previousPeriodRef, periodNameRef }}
-          />
-        )}
-        <DatesHorizontalLine />
-        <Dates />
-        <VerticalLines>
-          <VerticalLine />
-        </VerticalLines>
-      </Main>
-    )
+    <>
+      {!blockStore.hasContent && (
+        <Main>
+          <CircleWrapper>
+            <HeaderWrapper>
+              <Header>
+                Исторические <br />
+                даты
+              </Header>
+            </HeaderWrapper>
+            <Circle />
+            <CircleHorizontalLine />
+          </CircleWrapper>
+          <DatesHorizontalLine />
+          <Dates />
+          <VerticalLines>
+            <VerticalLine />
+          </VerticalLines>
+        </Main>
+      )}
+      {blockStore.hasContent && (
+        <Main>
+          <CircleWrapper>
+            <HeaderWrapper>
+              <Header>
+                Исторические <br />
+                даты
+              </Header>
+            </HeaderWrapper>
+            <Numbers />
+            {!isCompact && <Navigation pathElement={pathElement} />}
+            {isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
+            <Circle ref={circleRef} />
+            <CircleHorizontalLine />
+          </CircleWrapper>
+          {isCompact && <Navigation pathElement={pathElement} />}
+          <DatesHorizontalLine />
+          <Dates />
+          <VerticalLines>
+            <VerticalLine />
+          </VerticalLines>
+        </Main>
+      )}
+    </>
   );
 });
 
