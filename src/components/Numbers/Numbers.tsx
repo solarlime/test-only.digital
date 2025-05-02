@@ -13,6 +13,7 @@ const StyledNumbers = styled.ul`
   padding: 0;
   margin: 0;
   z-index: -1;
+  -webkit-user-select: none;
   user-select: none;
 
   @media screen and (max-width: 500px) {

@@ -13,7 +13,6 @@ const StyledPeriodButtons = styled.fieldset`
   display: flex;
   flex-basis: 50%;
   justify-content: center;
-  user-select: none;
 `;
 
 const PeriodButtons = observer(

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
-import { useGSAP } from '@gsap/react';
 import { observer } from 'mobx-react-lite';
 import { useContext, useEffect, useRef } from 'react';
 import PeriodButtons from './PeriodButtons';
@@ -23,6 +22,8 @@ const StyledNavigation = styled.div`
   justify-content: flex-end;
   width: 100%;
   box-sizing: border-box;
+  -webkit-user-select: none;
+  user-select: none;
 
   @media screen and (max-width: 500px) {
     order: 1;
@@ -31,7 +32,7 @@ const StyledNavigation = styled.div`
   }
 `;
 
-gsap.registerPlugin(MotionPathPlugin, useGSAP);
+gsap.registerPlugin(MotionPathPlugin);
 
 const offsetAngle = -30;
 const shift = offsetAngle / 360;
@@ -43,15 +44,16 @@ const Navigation = observer(
     const itemsRef = useRef<HTMLDivElement[]>([]);
     const previousPeriodRef = useRef<IExtendedPeriod>({} as IExtendedPeriod);
 
-    useGSAP(() => {
+    useEffect(() => {
       if (isCompact) return;
       if (!pathElement) return;
       const items = itemsRef.current;
       const count = items.length;
+      const tweens: gsap.core.Tween[] = [];
 
       items.forEach((item, i) => {
         const progress = shift - i / count;
-        gsap.to(item, {
+        const tween = gsap.set(item, {
           motionPath: {
             path: pathElement,
             align: pathElement,
@@ -62,7 +64,12 @@ const Navigation = observer(
           },
           duration: 0,
         });
+        tweens.push(tween);
       });
+
+      return () => {
+        tweens.forEach((tween) => tween.kill());
+      };
     }, [pathElement]);
 
     useEffect(() => {

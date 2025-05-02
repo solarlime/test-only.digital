@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
 import { v4 as uuidv4 } from 'uuid';
 import { Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperClass } from 'swiper/react';
 import DatesButtons from './DatesButtons';
 import { useStore } from '../../store/StoreProvider';
 
@@ -73,6 +73,9 @@ const Dates = observer(() => {
             modules={[Navigation]}
             spaceBetween={25}
             slidesPerView={1.5}
+            onUpdate={(swiper: SwiperClass) => {
+              swiper.slideTo(0, 0);
+            }}
             breakpoints={{
               650: {
                 slidesPerView: 2.5,
