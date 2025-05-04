@@ -70,6 +70,8 @@
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
+    "@juggle/resize-observer": "^3.4.0",
+    "@react-hook/resize-observer": "^2.0.2",
     "gsap": "^3.12.7",
     "mobx": "^6.13.7",
     "mobx-react-lite": "^4.1.0",

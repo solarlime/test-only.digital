@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState, useRef } from 'react';
 import { useStore } from '../store/StoreProvider';
 import { AppContext } from '../AppContext';
 import Dates from './Dates/Dates';
@@ -94,9 +94,11 @@ const Block = observer(() => {
     null,
   );
 
-  const circleRef = useCallback((node: SVGPathElement | null) => {
+  const pathRef = useCallback((node: SVGPathElement | null) => {
     if (node) setPathElement(node);
   }, []);
+
+  const circleRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
     blockStore.getContent();
@@ -133,12 +135,16 @@ const Block = observer(() => {
               </Header>
             </HeaderWrapper>
             <Numbers />
-            {!isCompact && <Navigation pathElement={pathElement} />}
+            {!isCompact && (
+              <Navigation pathElement={pathElement} triggerRef={circleRef} />
+            )}
             {isCompact && <PeriodName>{blockStore.period.name}</PeriodName>}
-            <Circle ref={circleRef} />
+            <Circle ref={circleRef} pathRef={pathRef} />
             <CircleHorizontalLine />
           </CircleWrapper>
-          {isCompact && <Navigation pathElement={pathElement} />}
+          {isCompact && (
+            <Navigation pathElement={pathElement} triggerRef={circleRef} />
+          )}
           <DatesHorizontalLine />
           <Dates />
           <VerticalLines>

@@ -1783,6 +1783,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@juggle/resize-observer@npm:^3.4.0":
+  version: 3.4.0
+  resolution: "@juggle/resize-observer@npm:3.4.0"
+  checksum: 10c0/12930242357298c6f2ad5d4ec7cf631dfb344ca7c8c830ab7f64e6ac11eb1aae486901d8d880fd08fb1b257800c160a0da3aee1e7ed9adac0ccbb9b7c5d93347
+  languageName: node
+  linkType: hard
+
 "@keyv/serialize@npm:^1.0.3":
   version: 1.0.3
   resolution: "@keyv/serialize@npm:1.0.3"
@@ -1870,6 +1877,36 @@ __metadata:
   version: 1.0.0-next.29
   resolution: "@polka/url@npm:1.0.0-next.29"
   checksum: 10c0/0d58e081844095cb029d3c19a659bfefd09d5d51a2f791bc61eba7ea826f13d6ee204a8a448c2f5a855c17df07b37517373ff916dd05801063c0568ae9937684
+  languageName: node
+  linkType: hard
+
+"@react-hook/latest@npm:^1.0.2":
+  version: 1.0.3
+  resolution: "@react-hook/latest@npm:1.0.3"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 10c0/d6a166c21121da519a516e8089ba28a2779d37b6017732ab55476c0d354754ad215394135765254f8752a7c6661c3fb868d088769a644848602f00f8821248ed
+  languageName: node
+  linkType: hard
+
+"@react-hook/passive-layout-effect@npm:^1.2.0":
+  version: 1.2.1
+  resolution: "@react-hook/passive-layout-effect@npm:1.2.1"
+  peerDependencies:
+    react: ">=16.8"
+  checksum: 10c0/5c9e6b3df1c91fc2b1d4f711ca96b5f8cb3f6a13a2e97dac7cce623e58d7ee57999c45db3778d0af0b2522b3a5b7463232ef21cb3ee9900437172d48f766d933
+  languageName: node
+  linkType: hard
+
+"@react-hook/resize-observer@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "@react-hook/resize-observer@npm:2.0.2"
+  dependencies:
+    "@react-hook/latest": "npm:^1.0.2"
+    "@react-hook/passive-layout-effect": "npm:^1.2.0"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10c0/a88f088bd5b87fea80daca391bdea9823dc38651bd112f0c607b057d9c8381f37395cf5a01a79ba7ab24369c4b48acf912cfef0244e6610d72ea3074415e9c32
   languageName: node
   linkType: hard
 
@@ -9597,6 +9634,8 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.24.0"
     "@gsap/react": "npm:^2.1.2"
+    "@juggle/resize-observer": "npm:^3.4.0"
+    "@react-hook/resize-observer": "npm:^2.0.2"
     "@svgr/webpack": "npm:^8.1.0"
     "@swc/core": "npm:^1.11.21"
     "@types/csso": "npm:^5"

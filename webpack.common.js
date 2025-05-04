@@ -54,6 +54,14 @@ const config = (mode) => ({
           loader: 'swc-loader',
         },
       },
+      // uuid developers don't transpile their code
+      {
+        test: /\.(m?js|jsx)$/,
+        include: /(uuid)/,
+        use: {
+          loader: 'swc-loader',
+        },
+      },
       {
         test: /\.(ts|tsx)$/,
         exclude: /node_modules/,

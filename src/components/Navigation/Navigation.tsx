@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import gsap from 'gsap';
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { observer } from 'mobx-react-lite';
-import { useContext, useEffect, useRef } from 'react';
+import { RefObject, useContext, useEffect, useRef } from 'react';
 import PeriodButtons from './PeriodButtons';
 import NavigationLabel from './NavigationLabel';
 import ArrowButtons from './ArrowButtons';
 import { IExtendedPeriod } from '../../interfaces/content';
 import { AppContext } from '../../AppContext';
 import { useStore } from '../../store/StoreProvider';
+import useResize from '../../hooks/useResize';
 
 const NavigationButtons = styled.div`
   display: flex;
@@ -38,21 +39,31 @@ const offsetAngle = -30;
 const shift = offsetAngle / 360;
 
 const Navigation = observer(
-  ({ pathElement }: { pathElement: SVGPathElement | null }) => {
+  ({
+    pathElement,
+    triggerRef,
+  }: {
+    pathElement: SVGPathElement | null;
+    triggerRef: RefObject<SVGSVGElement | null>;
+  }) => {
     const { blockStore } = useStore();
     const { isCompact } = useContext(AppContext);
     const itemsRef = useRef<HTMLDivElement[]>([]);
     const previousPeriodRef = useRef<IExtendedPeriod>({} as IExtendedPeriod);
+
+    const timestamp = useResize(triggerRef.current!);
 
     useEffect(() => {
       if (isCompact) return;
       if (!pathElement) return;
       const items = itemsRef.current;
       const count = items.length;
+      const progressOffset = 1 / count;
       const tweens: gsap.core.Tween[] = [];
 
       items.forEach((item, i) => {
-        const progress = shift - i / count;
+        const progress =
+          shift + progressOffset * (blockStore.period.number - 1) - i / count;
         const tween = gsap.set(item, {
           motionPath: {
             path: pathElement,
@@ -70,7 +81,7 @@ const Navigation = observer(
       return () => {
         tweens.forEach((tween) => tween.kill());
       };
-    }, [pathElement]);
+    }, [pathElement, timestamp]);
 
     useEffect(() => {
       if (isCompact) return;

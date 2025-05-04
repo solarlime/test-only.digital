@@ -6,6 +6,12 @@ import App from './App';
 
 import './index.css';
 
+if (!window.ResizeObserver) {
+  window.ResizeObserver = await import('@juggle/resize-observer').then(
+    (module) => module.ResizeObserver,
+  );
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <GlobalStyles />

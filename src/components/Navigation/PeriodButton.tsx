@@ -52,6 +52,7 @@ const PeriodButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
   z-index: 2;
+  border-radius: 50%;
 
   & > ${StyledPeriodButton} {
     transform: scale(0.107);
@@ -64,6 +65,8 @@ const PeriodButtonWrapper = styled.div`
   &:hover,
   &:has(input:checked) {
     & > ${StyledPeriodButton} {
+      background: var(--white);
+      border: 1px solid var(--dove);
       transform: scale(1);
 
       @media screen and (max-width: 500px) {
