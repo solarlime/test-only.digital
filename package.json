@@ -10,7 +10,8 @@
     "prettier:fix": "prettier . --write",
     "lint:code": "eslint . --fix",
     "lint:styles": "stylelint ./src/**/*.(html|css|ts|tsx) --fix",
-    "lint": "yarn lint:code && yarn lint:styles"
+    "lint": "yarn lint:code && yarn lint:styles",
+    "test": "echo \"Error: no test specified\""
   },
   "type": "module",
   "repository": {
