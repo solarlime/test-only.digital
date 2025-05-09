@@ -1,0 +1,40 @@
+[
+  {
+    "from": 1,
+    "to": 3,
+    "name": "Test_period_1",
+    "dates": [
+      {
+        "date": 1,
+        "content": "Test_content_1"
+      },
+      {
+        "date": 2,
+        "content": "Test_content_2"
+      },
+      {
+        "date": 3,
+        "content": "Test_content_3"
+      }
+    ]
+  },
+  {
+    "from": 4,
+    "to": 6,
+    "name": "Test_period_2",
+    "dates": [
+      {
+        "date": 4,
+        "content": "Test_content_4"
+      },
+      {
+        "date": 5,
+        "content": "Test_content_5"
+      },
+      {
+        "date": 6,
+        "content": "Test_content_6"
+      }
+    ]
+  }
+]

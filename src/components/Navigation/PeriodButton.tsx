@@ -160,6 +160,7 @@ const PeriodButton = observer(
         ref={(el) => {
           forwardedRefs.itemsRef.current[i] = el!;
         }}
+        data-testid={`period-button-${number}`}
       >
         <PeriodInput
           id={`${blockStore.blockID}-${number}`}
