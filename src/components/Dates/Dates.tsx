@@ -61,7 +61,7 @@ const Dates = observer(() => {
     <>
       {!blockStore.hasContent && (
         <StyledDates>
-          <p>Нет дат для отображения</p>
+          <p data-testid="no-dates">Нет дат для отображения</p>
         </StyledDates>
       )}
       {blockStore.hasContent && (

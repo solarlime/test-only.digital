@@ -1,5 +1,5 @@
 import { describe, it, expect } from '@jest/globals';
-import getRandomAlphaString from '../src/utils/getRandomAlphaString';
+import getRandomAlphaString from '../../src/utils/getRandomAlphaString';
 
 describe('getRandomAlphaString', () => {
   it('returns a string of the specified length', () => {

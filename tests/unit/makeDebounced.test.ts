@@ -1,5 +1,5 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
-import makeDebounced from '../src/utils/makeDebounced';
+import makeDebounced from '../../src/utils/makeDebounced';
 
 describe('makeDebounced', () => {
   jest.useFakeTimers();
