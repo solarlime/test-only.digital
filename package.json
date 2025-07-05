@@ -16,14 +16,14 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/solarlime/help-desk.git"
+    "url": "git+https://github.com/solarlime/test-only.digital.git"
   },
   "author": "solarlime",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/solarlime/help-desk/issues"
+    "url": "https://github.com/solarlime/test-only.digital/issues"
   },
-  "homepage": "https://github.com/solarlime/help-desk#readme",
+  "homepage": "https://github.com/solarlime/test-only.digital#readme",
   "devDependencies": {
     "@eslint/js": "^9.24.0",
     "@jest/globals": "^29.7.0",
@@ -37,7 +37,6 @@
     "@types/webpack-bundle-analyzer": "^4",
     "clean-webpack-plugin": "^4.0.0",
     "core-js": "^3.41.0",
-    "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "csso": "^5.0.5",
