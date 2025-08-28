@@ -59,7 +59,7 @@
     "postcss": "^8.5.3",
     "postcss-styled-syntax": "^0.7.1",
     "prettier": "^3.5.3",
-    "stylelint": "^16.18.0",
+    "stylelint": "^16.23.1",
     "stylelint-config-standard": "^38.0.0",
     "swc-loader": "^0.2.6",
     "terser-webpack-plugin": "^5.3.14",
