@@ -4674,10 +4674,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.41.0":
-  version: 3.41.0
-  resolution: "core-js@npm:3.41.0"
-  checksum: 10c0/a29ed0b7fe81acf49d04ce5c17a1947166b1c15197327a5d12f95bbe84b46d60c3c13de701d808f41da06fa316285f3f55ce5903abc8d5642afc1eac4457afc8
+"core-js@npm:^3.45.1":
+  version: 3.45.1
+  resolution: "core-js@npm:3.45.1"
+  checksum: 10c0/c38e5fae5a05ee3a129c45e10056aafe61dbb15fd35d27e0c289f5490387541c89741185e0aeb61acb558559c6697e016c245cca738fa169a73f2b06cd30e6b6
   languageName: node
   linkType: hard
 
@@ -11539,7 +11539,7 @@ __metadata:
     "@types/react-dom": "npm:^19.1.2"
     "@types/webpack-bundle-analyzer": "npm:^4"
     clean-webpack-plugin: "npm:^4.0.0"
-    core-js: "npm:^3.41.0"
+    core-js: "npm:^3.45.1"
     css-loader: "npm:^7.1.2"
     css-minimizer-webpack-plugin: "npm:^7.0.2"
     csso: "npm:^5.0.5"
